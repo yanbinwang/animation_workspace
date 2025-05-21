@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        style="@style/AppTitleTheme"
+        android:layout_width="match_parent"
+        android:layout_height="?android:attr/actionBarSize"
+        android:background="?android:colorPrimary"
+        android:elevation="3dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/shared_target"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_centerHorizontal="true"
+                android:src="@drawable/bg_circle"
+                android:transitionName="transition_reveal1" />
+
+            <TextView
+                android:id="@+id/title"
+                style="@style/AppTitleThemeInverse"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center_vertical|start"
+                tools:text="Title" />
+
+        </RelativeLayout>
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <RelativeLayout
+        android:id="@+id/reveal_root"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/sample_body"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:padding="10dp"
+            android:text="Sample Activity demonstrating how to create different CirculaReveal animations" />
+
+        <ImageView
+            android:id="@+id/square_green"
+            android:layout_width="84dp"
+            android:layout_height="84dp"
+            android:layout_alignParentBottom="true"
+            android:layout_margin="2dp"
+            android:alpha="0.5"
+            android:scaleX="0.5"
+            android:scaleY="0.5"
+            android:src="@drawable/bg_circle"
+            app:tint="@color/sample_green" />
+
+        <ImageView
+            android:id="@+id/square_red"
+            android:layout_width="84dp"
+            android:layout_height="84dp"
+            android:layout_alignParentBottom="true"
+            android:layout_margin="2dp"
+            android:layout_toRightOf="@id/square_green"
+            android:alpha="0.5"
+            android:scaleX="0.5"
+            android:scaleY="0.5"
+            android:src="@drawable/bg_circle"
+            app:tint="@color/sample_red" />
+
+        <ImageView
+            android:id="@+id/square_blue"
+            android:layout_width="84dp"
+            android:layout_height="84dp"
+            android:layout_alignParentBottom="true"
+            android:layout_margin="2dp"
+            android:layout_toRightOf="@id/square_red"
+            android:alpha="0.5"
+            android:scaleX="0.5"
+            android:scaleY="0.5"
+            android:src="@drawable/bg_circle"
+            app:tint="@color/sample_blue" />
+
+        <ImageView
+            android:id="@+id/square_yellow"
+            android:layout_width="84dp"
+            android:layout_height="84dp"
+            android:layout_alignParentBottom="true"
+            android:layout_margin="2dp"
+            android:layout_toRightOf="@id/square_blue"
+            android:alpha="0.5"
+            android:scaleX="0.5"
+            android:scaleY="0.5"
+            android:src="@drawable/bg_circle"
+            app:tint="@color/sample_yellow" />
+
+    </RelativeLayout>
+
+</LinearLayout>

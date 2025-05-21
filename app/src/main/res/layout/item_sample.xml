@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?><!-- clipToPadding:顶部可以顶上去 -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/sample_container"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:clipToPadding="false"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:padding="20dp">
+
+    <ImageView
+        android:id="@+id/sample_icon"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:src="@drawable/bg_circle" />
+
+    <TextView
+        android:id="@+id/sample_name"
+        style="@style/Base.TextAppearance.AppCompat.Large"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp" />
+
+</LinearLayout>

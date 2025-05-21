@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <application
+        android:allowBackup="true"
+        android:fullBackupContent="false"
+        android:hardwareAccelerated="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:largeHeap="true"
+        android:roundIcon="@mipmap/ic_launcher"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true"
+        tools:ignore="LockedOrientationActivity"
+        tools:replace="android:allowBackup,android:icon,android:theme,android:label"
+        tools:targetApi="m">
+
+        <!-- exported->标示当前Activity是否可以被另一个Application的组件启动：true允许被启动；false不允许被启动。 -->
+        <activity
+            android:name="com.example.material.activity.MainActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden|screenLayout|uiMode"
+            android:exported="true"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustResize">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!-- Transition执行界面 -->
+        <activity
+            android:name="com.example.material.activity.TransitionActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden|screenLayout|uiMode"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeRed"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
+
+        <activity
+            android:name="com.example.material.activity.TransitionActivity2"
+            android:configChanges="orientation|screenSize|keyboardHidden|screenLayout|uiMode"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeRed"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
+
+        <activity
+            android:name="com.example.material.activity.TransitionActivity3"
+            android:configChanges="orientation|screenSize|keyboardHidden|screenLayout|uiMode"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeRed"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
+
+        <!-- SharedElement执行界面 -->
+        <activity
+            android:name="com.example.material.activity.SharedElementActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden|screenLayout|uiMode"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeBlue"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
+
+        <!-- Animations执行界面 -->
+        <activity
+            android:name="com.example.material.activity.AnimationsActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden|screenLayout|uiMode"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeGreen"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
+
+        <activity
+            android:name="com.example.material.activity.AnimationsActivity2"
+            android:configChanges="orientation|screenSize|keyboardHidden|screenLayout|uiMode"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeGreen"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
+
+        <!-- Reveal执行界面 -->
+        <activity
+            android:name="com.example.material.activity.RevealActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden|screenLayout|uiMode"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeYellow"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
+
+    </application>
+
+</manifest>
