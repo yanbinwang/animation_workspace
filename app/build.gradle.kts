@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
@@ -5,6 +7,7 @@ plugins {
     alias(libs.plugins.kotlin.parcelize)
 }
 
+@Suppress("DEPRECATION")
 android {
     namespace = "com.example.animation"
     compileSdk = libs.versions.compileSdkVersion.get().toInt()
@@ -15,13 +18,21 @@ android {
         targetSdk = libs.versions.targetSdkVersion.get().toInt()
         versionCode = libs.versions.versionCode.get().toInt()
         versionName = libs.versions.versionName.get()
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner = libs.versions.testInstrumentationRunner.get()
         // 减少语言支持
         resourceConfigurations.add("zh")
         // dex 突破 65535 的限制
         multiDexEnabled = true
-//        // 告知 Gradle 只打包 hdpi、xhdpi 和 xxhdpi 这三种屏幕密度的资源->如果23最低版本，启用这行
-//        resConfigs("hdpi", "xhdpi", "xxhdpi")
+    }
+
+    buildFeatures {
+        buildConfig = true
+    }
+
+    kotlin {
+        compilerOptions {
+            jvmTarget.set(JvmTarget.JVM_11)
+        }
     }
 
     compileOptions {
@@ -29,22 +40,20 @@ android {
         targetCompatibility = JavaVersion.VERSION_11
     }
 
-    kotlinOptions {
-        jvmTarget = "11"
-    }
-
     buildTypes {
-        //测试环境
+        // 测试环境
         debug {
-            buildConfigField("boolean", "ISDEBUG", "true")
             isMinifyEnabled = false
+            isShrinkResources = false
+            buildConfigField("boolean", "ISDEBUG", "true")
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
 
-        //生产环境
+        // 生产环境
         release {
+            isMinifyEnabled = true
+            isShrinkResources = true
             buildConfigField("boolean", "ISDEBUG", "false")
-            isMinifyEnabled = false
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
     }
@@ -53,9 +62,9 @@ android {
 dependencies {
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
     testImplementation(libs.junit)
-    androidTestImplementation(libs.bundles.android.testing)
-    //安卓x库
+    androidTestImplementation(libs.bundles.androidx.testing)
+    // 安卓x库
     api(libs.bundles.androidx.general.core)
-    //其余谷歌官方库
+    // 其余谷歌官方库
     api(libs.bundles.google.extensions)
 }
