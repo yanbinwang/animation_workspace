@@ -60,6 +60,7 @@ class RevealActivity : BaseActivity(), OnTouchListener {
             }
             val title = findViewById<TextView>(R.id.title)
             title.text = sampleEntity?.name
+            title.setTextColor(ContextCompat.getColor(this, android.R.color.black))
             // 初始化
             setUpWindowAnimations()
             setupLayout()

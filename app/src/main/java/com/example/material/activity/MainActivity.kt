@@ -3,6 +3,7 @@ package com.example.material.activity
 import android.os.Bundle
 import android.transition.Slide
 import android.view.Gravity
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -24,6 +25,8 @@ class MainActivity : BaseActivity() {
         initSystemBar(true, true)
         setUpWindowAnimations()
         initView()
+        val title = findViewById<TextView>(R.id.title)
+        title.setTextColor(ContextCompat.getColor(this, android.R.color.black))
     }
 
     /**

@@ -8,6 +8,7 @@ import android.view.Gravity
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
 import com.example.animation.R
 import com.example.material.bean.SampleBean
@@ -27,8 +28,11 @@ class TransitionActivity3 : BaseActivity() {
             type = intent.extras?.getInt(EXTRA_TYPE)
             val title = findViewById<TextView>(R.id.title)
             title.text = sampleEntity?.name
+            title.setTextColor(ContextCompat.getColor(this, android.R.color.black))
             val squareRed: ImageView = findViewById(R.id.square_red)
-            sampleEntity?.color?.let { DrawableCompat.setTint(squareRed.drawable, it) }
+            sampleEntity?.color?.let {
+                DrawableCompat.setTint(squareRed.drawable, it)
+            }
             // 初始化
             setUpWindowAnimations()
             setupLayout()

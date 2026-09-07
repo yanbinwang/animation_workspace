@@ -5,6 +5,7 @@ import android.transition.ChangeBounds
 import android.transition.Slide
 import android.view.Gravity
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import com.example.animation.R
 import com.example.material.bean.SampleBean
 import com.example.material.fragment.SharedElementFragment
@@ -22,6 +23,7 @@ class SharedElementActivity : BaseActivity() {
             val sampleEntity = bundle.getParcelable<SampleBean>(EXTRA_SAMPLE)
             val title = findViewById<TextView>(R.id.title)
             title.text = sampleEntity?.name
+            title.setTextColor(ContextCompat.getColor(this, android.R.color.black))
             // 初始化
             setUpWindowAnimations()
             setupLayout(sampleEntity)

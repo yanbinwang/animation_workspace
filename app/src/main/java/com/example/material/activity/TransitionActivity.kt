@@ -7,6 +7,7 @@ import android.transition.Slide
 import android.transition.Visibility
 import android.widget.Button
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import com.example.animation.R
 import com.example.material.bean.SampleBean
 
@@ -24,6 +25,7 @@ class TransitionActivity : BaseActivity() {
             sampleEntity = bundle.getParcelable(EXTRA_SAMPLE)
             val title = findViewById<TextView>(R.id.title)
             title.text = sampleEntity?.name
+            title.setTextColor(ContextCompat.getColor(this, android.R.color.black))
             // 初始化
             setUpWindowAnimations()
             setupLayout()

@@ -10,6 +10,7 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
 import com.example.animation.R
 import com.example.material.bean.SampleBean
@@ -37,6 +38,7 @@ class AnimationsActivity : BaseActivity() {
             sampleEntity?.color?.let { DrawableCompat.setTint(squareGreen.drawable, it) }
             val title: TextView = findViewById(R.id.title)
             title.text = sampleEntity?.name
+            title.setTextColor(ContextCompat.getColor(this, android.R.color.black))
             // 初始化
             setUpWindowAnimations()
             setupLayout()
