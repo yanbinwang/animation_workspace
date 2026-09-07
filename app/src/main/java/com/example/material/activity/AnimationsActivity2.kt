@@ -14,7 +14,6 @@ import android.widget.TextView
 import com.example.animation.R
 
 class AnimationsActivity2 : BaseActivity() {
-    private val DELAY = 100
     private val viewsToAnimate = ArrayList<View>()
     private var scene0: Scene? = null
     private var scene1: Scene? = null
@@ -22,10 +21,15 @@ class AnimationsActivity2 : BaseActivity() {
     private var scene3: Scene? = null
     private var scene4: Scene? = null
 
+    companion object {
+        private const val DELAY = 100
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_animations2)
-        //初始化
+        initSystemBar(true, true)
+        // 初始化
         setUpWindowAnimations()
         setupLayout()
         setupToolbar()

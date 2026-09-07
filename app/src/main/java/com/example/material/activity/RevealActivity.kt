@@ -18,6 +18,7 @@ import android.view.animation.AccelerateInterpolator
 import android.view.animation.AnimationUtils
 import android.view.animation.Interpolator
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.annotation.ColorRes
@@ -32,26 +33,34 @@ import kotlin.math.max
 
 @SuppressLint("ClickableViewAccessibility", "SetTextI18n")
 class RevealActivity : BaseActivity(), OnTouchListener {
-    private val DELAY = 100
+    private var llRoot: LinearLayout? = null
     private var bgViewGroup: RelativeLayout? = null
     private var toolbar: Toolbar? = null
     private var interpolator: Interpolator? = null
     private var body: TextView? = null
     private var btnRed: View? = null
 
+    companion object {
+        private const val DELAY = 100
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_reveal)
         val bundle = intent.extras
-        //以下为判断bundle是否为空，以及bundle是否包含关键词“bundle”
+        // 以下为判断bundle是否为空，以及bundle是否包含关键词“bundle”
         if (bundle != null && bundle.containsKey(EXTRA_SAMPLE)) {
-            //如果传递有值，则获取赋值
+            // 如果传递有值，则获取赋值
             val sampleEntity = bundle.getParcelable<SampleBean>(EXTRA_SAMPLE)
             val sharedTarget = findViewById<ImageView>(R.id.shared_target)
-            sampleEntity?.color?.let { DrawableCompat.setTint(sharedTarget.drawable, it) }
+            sampleEntity?.color?.let {
+                DrawableCompat.setTint(sharedTarget.drawable, it)
+                val isLight = shouldUseWhiteSystemBarsForColor(it)
+                initSystemBar(isLight, isLight)
+            }
             val title = findViewById<TextView>(R.id.title)
             title.text = sampleEntity?.name
-            //初始化
+            // 初始化
             setUpWindowAnimations()
             setupLayout()
             setupToolbar()
@@ -119,6 +128,7 @@ class RevealActivity : BaseActivity(), OnTouchListener {
     }
 
     private fun setupLayout() {
+        llRoot = findViewById(R.id.ll_root)
         bgViewGroup = findViewById(R.id.reveal_root)
         toolbar = findViewById(R.id.toolbar)
         body = findViewById(R.id.sample_body)
@@ -147,6 +157,8 @@ class RevealActivity : BaseActivity(), OnTouchListener {
         })
         body?.text = "Circular Reveal Animation from top with nested animations on end"
         body?.setTextColor(ContextCompat.getColor(this, R.color.theme_blue_background))
+        toolbar?.setBackgroundResource(R.color.sample_blue)
+        llRoot?.setBackgroundResource(R.color.theme_blue_background)
     }
 
     private fun revealRed() {
@@ -176,18 +188,24 @@ class RevealActivity : BaseActivity(), OnTouchListener {
         val layoutParams = RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT)
         layoutParams.addRule(RelativeLayout.CENTER_IN_PARENT)
         btnRed?.layoutParams = layoutParams
+        toolbar?.setBackgroundResource(R.color.sample_red)
+        llRoot?.setBackgroundResource(R.color.theme_red_background)
     }
 
     private fun revealYellow(x: Float, y: Float) {
         animateRevealColorFromCoordinates(bgViewGroup, R.color.sample_yellow, x.toInt(), y.toInt())
         body?.text = "Circular Reveal Animation starting from the center of target view"
         body?.setTextColor(ContextCompat.getColor(this, R.color.theme_yellow_background))
+        toolbar?.setBackgroundResource(R.color.sample_yellow)
+        llRoot?.setBackgroundResource(R.color.theme_yellow_background)
     }
 
     private fun revealGreen() {
         animateRevealColor(bgViewGroup, R.color.sample_green)
         body?.text = "Circular Reveal Animation starting from touch coordinates"
         body?.setTextColor(ContextCompat.getColor(this, R.color.theme_green_background))
+        toolbar?.setBackgroundResource(R.color.sample_green)
+        llRoot?.setBackgroundResource(R.color.theme_green_background)
     }
 
     private fun hideTarget() {
@@ -233,7 +251,7 @@ class RevealActivity : BaseActivity(), OnTouchListener {
         val finalRadius = max(viewRoot?.width?.toDouble().orZero, viewRoot?.height?.toDouble().orZero).toInt()
         val anim = ViewAnimationUtils.createCircularReveal(viewRoot, cx, cy, 0f, finalRadius.toFloat())
         viewRoot?.visibility = View.VISIBLE
-        anim.setDuration(500)
+        anim.duration = 500
         anim.interpolator = AccelerateInterpolator()
         anim.start()
     }
@@ -248,7 +266,7 @@ class RevealActivity : BaseActivity(), OnTouchListener {
         val finalRadius = hypot(viewRoot?.width?.toDouble().orZero, viewRoot?.height?.toDouble().orZero).toFloat()
         val anim = ViewAnimationUtils.createCircularReveal(viewRoot, x, y, 0f, finalRadius)
         viewRoot?.setBackgroundColor(ContextCompat.getColor(this, color))
-        anim.setDuration(500)
+        anim.duration = 500
         anim.interpolator = AccelerateDecelerateInterpolator()
         anim.start()
         return anim
@@ -265,7 +283,7 @@ class RevealActivity : BaseActivity(), OnTouchListener {
                 viewRoot?.visibility = View.INVISIBLE
             }
         })
-        anim.setDuration(500)
+        anim.duration = 500
         anim.start()
     }
 

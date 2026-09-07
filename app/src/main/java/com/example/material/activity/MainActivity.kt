@@ -16,11 +16,12 @@ import com.example.material.bean.SampleBean
  * 如果用户不对toolbar做屏蔽
  * 在mainfest中的label属性就是toolbar的标题
  */
-class MainActivity : AppCompatActivity() {
+class MainActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        initSystemBar(true, true)
         setUpWindowAnimations()
         initView()
     }

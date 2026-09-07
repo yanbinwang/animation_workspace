@@ -17,10 +17,11 @@ class TransitionActivity2 : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_transition2)
+        initSystemBar(true, true)
         val bundle = intent.extras
-        //以下为判断bundle是否为空，以及bundle是否包含关键词“bundle”
+        // 以下为判断bundle是否为空，以及bundle是否包含关键词“bundle”
         if (bundle != null && bundle.containsKey(EXTRA_SAMPLE)) {
-            //如果传递有值，则获取赋值
+            // 如果传递有值，则获取赋值
             val sampleEntity = bundle.getParcelable<SampleBean>(EXTRA_SAMPLE)
             type = intent.extras?.getInt(EXTRA_TYPE)
             val title = findViewById<TextView>(R.id.title)
@@ -42,7 +43,7 @@ class TransitionActivity2 : BaseActivity() {
         }
     }
 
-    //进入动画
+    // 进入动画
     private fun setUpWindowAnimations() {
         val transition = if (type == TYPE_PROGRAMMATICALLY) {
             buildEnterTransition()

@@ -27,16 +27,17 @@ class AnimationsActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_animations)
+        initSystemBar(true, true)
         val bundle = intent.extras
-        //以下为判断bundle是否为空，以及bundle是否包含关键词“bundle”
+        // 以下为判断bundle是否为空，以及bundle是否包含关键词“bundle”
         if (bundle != null && bundle.containsKey(EXTRA_SAMPLE)) {
-            //如果传递有值，则获取赋值
+            // 如果传递有值，则获取赋值
             sampleEntity = bundle.getParcelable(EXTRA_SAMPLE)
             val squareGreen = findViewById<ImageView>(R.id.square_green)
             sampleEntity?.color?.let { DrawableCompat.setTint(squareGreen.drawable, it) }
             val title: TextView = findViewById(R.id.title)
             title.text = sampleEntity?.name
-            //初始化
+            // 初始化
             setUpWindowAnimations()
             setupLayout()
             setupToolbar()
