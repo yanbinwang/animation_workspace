@@ -8,6 +8,9 @@ import android.graphics.drawable.GradientDrawable
 import android.graphics.drawable.GradientDrawable.OVAL
 import android.os.Bundle
 import android.os.Looper
+import android.view.View
+import android.view.ViewGroup
+import android.view.ViewTreeObserver
 import androidx.annotation.ColorInt
 import androidx.core.graphics.toColorInt
 import com.example.animation.BuildConfig
@@ -18,6 +21,83 @@ import java.util.Locale
 import java.util.regex.Pattern
 
 //------------------------------------方法工具类------------------------------------
+/**
+ * 调整view大小
+ * @param width  可使用MATCH_PARENT和WRAP_CONTENT，传null或者不传为不变
+ * @param height 可使用MATCH_PARENT和WRAP_CONTENT，传null或者不传为不变
+ */
+fun View?.size(width: Int? = null, height: Int? = null) {
+    if (this == null) return
+    val lp = layoutParams
+    height?.let { layoutParams?.height = it }
+    width?.let { layoutParams?.width = it }
+    layoutParams = lp ?: ViewGroup.LayoutParams(width ?: ViewGroup.LayoutParams.WRAP_CONTENT, height ?: ViewGroup.LayoutParams.WRAP_CONTENT)
+}
+
+/**
+ * 设置margin，单位px
+ * marginStart/marginEnd 是系统提供的「相对布局属性」，在 LTR/RTL 布局下，系统会自动映射到 leftMargin/rightMargin，无需手动赋值同步
+ */
+fun View?.margin(start: Int? = null, top: Int? = null, end: Int? = null, bottom: Int? = null) {
+    if (this == null) return
+    val lp = layoutParams as? ViewGroup.MarginLayoutParams ?: return
+    start?.let {
+        lp.marginStart = it
+    }
+    top?.let {
+        lp.topMargin = it
+    }
+    end?.let {
+        lp.marginEnd = it
+    }
+    bottom?.let {
+        lp.bottomMargin = it
+    }
+    layoutParams = lp
+}
+
+/**
+ * 设置padding，单位px
+ */
+fun View?.padding(start: Int? = null, top: Int? = null, end: Int? = null, bottom: Int? = null) {
+    if (this == null) return
+    setPaddingRelative(start ?: paddingStart, top ?: paddingTop, end ?: paddingEnd, bottom ?: paddingBottom)
+}
+
+/**
+ * 在layout完毕之后进行计算处理
+ */
+inline fun <T : View> T?.doOnceAfterLayout(crossinline listener: (T) -> Unit) {
+    if (this == null) return
+    val targetView = this
+    // 如果视图已经完成布局，直接调用回调函数
+    if (targetView.isLaidOut) {
+        listener(targetView)
+        return
+    }
+    // 如果视图还未完成布局，添加监听器
+    val observer = targetView.viewTreeObserver
+    if (!observer.isAlive) return
+    // 增加执行标记，防御队列积压多次回调
+    var executed = false
+    observer.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
+        override fun onGlobalLayout() {
+            // 回调内重新拿真实observer实例，禁止使用外部缓存的observer
+            val realObserver = targetView.viewTreeObserver
+            try {
+                if (realObserver.isAlive) {
+                    realObserver.removeOnGlobalLayoutListener(this)
+                }
+            } catch (_: IllegalStateException) {
+                // 竞争：observer瞬间死亡，忽略
+            }
+            if (executed) return
+            executed = true
+            listener(targetView)
+        }
+    })
+}
+
 /**
  * 当前是否是主线程
  */

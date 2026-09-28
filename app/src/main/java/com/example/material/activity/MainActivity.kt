@@ -23,10 +23,12 @@ class MainActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         initSystemBar(true, true)
-        setUpWindowAnimations()
-        initView()
         val title = findViewById<TextView>(R.id.title)
-        title.setTextColor(ContextCompat.getColor(this, android.R.color.black))
+        title.setTextColor(ContextCompat.getColor(this, android.R.color.white))
+        setUpWindowAnimations()
+        setupLayout()
+        setupToolbar()
+        supportActionBar?.setDisplayHomeAsUpEnabled(false)
     }
 
     /**
@@ -43,7 +45,7 @@ class MainActivity : BaseActivity() {
     /**
      * 初始化当前activity的控件以及基础数据等(页面跳转做在适配器内)
      */
-    private fun initView() {
+    private fun setupLayout() {
         val sampleList = listOf(
             SampleBean(ContextCompat.getColor(this, R.color.sample_red), "Transitions 动画"),
             SampleBean(ContextCompat.getColor(this, R.color.sample_blue), "Shared Elements 动画"),
