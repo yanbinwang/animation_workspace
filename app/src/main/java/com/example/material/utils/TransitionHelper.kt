@@ -14,7 +14,7 @@ object TransitionHelper {
      * @param otherParticipants 其他自定义共享元素，可变参数：View 和 transitionName 的配对
      * @return 共享元素 Pair 数组，传给 ActivityOptions.makeSceneTransitionAnimation
      */
-    fun createSafeTransitionParticipants(activity: Activity, includeStatusBar: Boolean, vararg otherParticipants: Pair<View, String>): Array<Pair<View, String>> {
+    fun createSafeTransitionParticipants(activity: Activity, includeStatusBar: Boolean = false, vararg otherParticipants: Pair<View, String>): Array<Pair<View, String>> {
         // 获取 Activity 根 DecorView（包含状态栏、导航栏+页面内容）
         val decor = activity.window.decorView
         var statusBar: View? = null
